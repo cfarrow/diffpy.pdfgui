@@ -24,7 +24,8 @@ import os.path
 import matplotlib
 matplotlib.use('WXAgg')
 from matplotlib.backends.backend_wxagg import FigureCanvasWxAgg as FigureCanvas
-from matplotlib.backends.backend_wxagg import NavigationToolbar2WxAgg as NavToolbar
+from matplotlib.backends.backend_wxagg import \
+    NavigationToolbar2WxAgg as NavToolbar
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_wx import _load_bitmap
 from matplotlib.artist import setp
@@ -32,7 +33,9 @@ from matplotlib.font_manager import FontProperties
 import wx
 
 
-DATA_SAVE_ID  = wx.NewId()
+DATA_SAVE_ID = wx.NewId()
+
+
 class ExtendedToolbar(NavToolbar):
     """An extended plotting toolbar with a save and close button."""
     def __init__(self, canvas, cankill):
@@ -138,7 +141,8 @@ class ExtendedPlotFrame(wx.Frame):
         self.toolbar.Realize()
 
         self.coordLabel = wx.StaticText(self,-1,style = wx.ALIGN_RIGHT|wx.NO_BORDER)
-        if wx.Platform == '__WXMAC__':
+        info = wx.PlatformInfo
+        if '__WXMAC__' in info and 'wxOSX-cocoa' not in info:
             # Mac platform (OSX 10.3, MacPython) does not seem to cope with
             # having a toolbar in a sizer. This work-around gets the buttons
             # back, but at the expense of having the toolbar at the top
